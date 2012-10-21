@@ -1,0 +1,29 @@
+<controls>
+    <SliderFloat_myFloat5>
+        <name>myFloat5</name>
+        <value>3</value>
+    </SliderFloat_myFloat5>
+    <SliderFloat_myFloat6>
+        <name>myFloat6</name>
+        <value>0.3</value>
+    </SliderFloat_myFloat6>
+    <SliderFloat_myFloat9>
+        <name>myFloat9</name>
+        <value>0.0054</value>
+    </SliderFloat_myFloat9>
+    <Toggle_myBool9>
+        <name>myBool9</name>
+        <value>0</value>
+    </Toggle_myBool9>
+    <QuadWarp_quadWarperTest>
+        <name>quadWarperTest</name>
+        <values_0_x>0</values_0_x>
+        <values_0_y>0</values_0_y>
+        <values_1_x>144</values_1_x>
+        <values_1_y>64</values_1_y>
+        <values_2_x>200</values_2_x>
+        <values_2_y>200</values_2_y>
+        <values_3_x>0</values_3_x>
+        <values_3_y>200</values_3_y>
+    </QuadWarp_quadWarperTest>
+</controls>

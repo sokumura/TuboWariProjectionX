@@ -1,0 +1,54 @@
+<controls>
+    <RengeInt_testRenge>
+        <name>testRenge</name>
+        <valueS>50</valueS>
+        <valueL>200</valueL>
+    </RengeInt_testRenge>
+    <RengeFloat_testFloatRenge>
+        <name>testFloatRenge</name>
+        <valueS>0</valueS>
+        <valueL>0</valueL>
+    </RengeFloat_testFloatRenge>
+    <Toggle_Full_Screen>
+        <name>Full Screen</name>
+        <value>0</value>
+    </Toggle_Full_Screen>
+    <SliderFloat_myFloat1>
+        <_noise></_noise>
+        <name>myFloat1: noise</name>
+        <value>0</value>
+    </SliderFloat_myFloat1>
+    <SliderInt_myInt1>
+        <name>myInt1</name>
+        <value>182</value>
+    </SliderInt_myInt1>
+    <ComboBox_box1>
+        <name>box1</name>
+        <value>0</value>
+    </ComboBox_box1>
+    <Button_Randomize_Background>
+        <name>Randomize Background</name>
+        <value>0</value>
+    </Button_Randomize_Background>
+    <SliderFloat_myFloat2>
+        <name>myFloat2</name>
+        <value>0.5</value>
+    </SliderFloat_myFloat2>
+    <SliderInt_myInt2>
+        <name>myInt2</name>
+        <value>6</value>
+    </SliderInt_myInt2>
+    <Toggle_myBool2>
+        <name>myBool2</name>
+        <value>0</value>
+    </Toggle_myBool2>
+    <ComboBox_box2>
+        <name>box2</name>
+        <value>0</value>
+    </ComboBox_box2>
+    <Slider2D_2dSlider_Test>
+        <name>2dSlider Test</name>
+        <valueX>144</valueX>
+        <valueY>64</valueY>
+    </Slider2D_2dSlider_Test>
+</controls>

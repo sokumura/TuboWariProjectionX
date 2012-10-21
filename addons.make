@@ -1,0 +1,7 @@
+ofxXmlSettings
+ofxCv
+ofxFenster
+ofxJVCOpenNI
+ofxMSAInteractiveObject
+ofxSOSimpleGuiToo
+ofxTextInputField
