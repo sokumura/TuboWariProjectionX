@@ -3,21 +3,21 @@
 #include "ofMain.h"
 #include "ofxFensterManager.h"
 #include "ofxOpenCv.h"
-#include "customs/myXtionOperator.h"
+#include "myXtionOperator.h"
 #include "ofxSimpleGuiToo.h"
+
 
 class uiWindow : public ofxFensterListener {
 public:
     
     void setup();
     
-    void update(){
-    
-    }
+    void update();
     
     void draw();
     void keyPressed(int key);
     
+    int counter;
 };
 
 class testApp : public ofBaseApp{
@@ -42,5 +42,6 @@ public:
     //fenster
     uiWindow ui;
     
+    int counter;
 		
 };

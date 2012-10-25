@@ -15,13 +15,6 @@
 		100BCFC51633F82300676683 /* ofxCvHaarFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BCFB81633F82300676683 /* ofxCvHaarFinder.cpp */; };
 		100BCFC61633F82300676683 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BCFBA1633F82300676683 /* ofxCvImage.cpp */; };
 		100BCFC71633F82300676683 /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BCFBD1633F82300676683 /* ofxCvShortImage.cpp */; };
-		100BD0851633FEF200676683 /* OpenNIGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0601633FEF200676683 /* OpenNIGrabber.cpp */; };
-		100BD0861633FEF200676683 /* OpenNIPerson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0621633FEF200676683 /* OpenNIPerson.cpp */; };
-		100BD0871633FEF200676683 /* OpenNIRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0641633FEF200676683 /* OpenNIRecorder.cpp */; };
-		100BD0881633FEF200676683 /* OpenNISkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0661633FEF200676683 /* OpenNISkeleton.cpp */; };
-		100BD0891633FEF200676683 /* PlaybackApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0681633FEF200676683 /* PlaybackApp.cpp */; };
-		100BD08A1633FEF200676683 /* RecordingApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD06A1633FEF200676683 /* RecordingApp.cpp */; };
-		100BD08B1633FEF200676683 /* ofxDepthGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD06C1633FEF200676683 /* ofxDepthGenerator.cpp */; };
 		100BD08F1633FEF200676683 /* ofxImageGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0741633FEF200676683 /* ofxImageGenerator.cpp */; };
 		100BD0911633FEF200676683 /* ofxOpenNIContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD07A1633FEF200676683 /* ofxOpenNIContext.cpp */; };
 		100BD0921633FEF200676683 /* ofxOpenNIRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD07D1633FEF200676683 /* ofxOpenNIRecorder.cpp */; };
@@ -42,6 +35,8 @@
 		100BD0B31633FF5200676683 /* libXnVHandGenerator_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 100BD0A41633FF5200676683 /* libXnVHandGenerator_1_5_2.dylib */; };
 		100BD0B41633FF5200676683 /* libXnVNite_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 100BD0A51633FF5200676683 /* libXnVNite_1_5_2.dylib */; };
 		100BD0CC1634067C00676683 /* libGhost32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 100BD0C21634067C00676683 /* libGhost32.a */; };
+		100BD0E816344D4700676683 /* myDepthGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0E716344D4700676683 /* myDepthGenerator.cpp */; };
+		100BD0EA16346D5900676683 /* myXtionOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100BD0E916346D5900676683 /* myXtionOperator.cpp */; };
 		1077bdf60382a48dff0cf235e6d9c4f7 /* ofxDisplayManagerMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 517fc8d6a09b7ba8281da32312d97225 /* ofxDisplayManagerMac.mm */; };
 		10b69de456aed1288fc9316b62b715d7 /* Tracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = a810df70319a10353588f5db2ed2e2b6 /* Tracker.cpp */; };
 		1250558f18dd430448dc5d82bb3d9cab /* ofxSimpleGuiPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 96ef7b6909b7e5dcb6dd4d9afc0f0c04 /* ofxSimpleGuiPage.cpp */; };
@@ -241,7 +236,6 @@
 		100BCFBD1633F82300676683 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
 		100BCFBE1633F82300676683 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
 		100BCFBF1633F82300676683 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
-		100BCFC91633F99D00676683 /* myDepthGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myDepthGenerator.h; sourceTree = "<group>"; };
 		100BCFCA1633F99D00676683 /* myXtionOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myXtionOperator.h; sourceTree = "<group>"; };
 		100BCFCB1633F99D00676683 /* ofxOpenNIHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOpenNIHeaders.h; sourceTree = "<group>"; };
 		100BCFD61633FEF200676683 /* libusb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libusb.h; sourceTree = "<group>"; };
@@ -372,20 +366,6 @@
 		100BD05B1633FEF200676683 /* XnUSBDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnUSBDevice.h; sourceTree = "<group>"; };
 		100BD05C1633FEF200676683 /* XnUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnUtils.h; sourceTree = "<group>"; };
 		100BD05D1633FEF200676683 /* XnVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnVersion.h; sourceTree = "<group>"; };
-		100BD0601633FEF200676683 /* OpenNIGrabber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenNIGrabber.cpp; sourceTree = "<group>"; };
-		100BD0611633FEF200676683 /* OpenNIGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenNIGrabber.h; sourceTree = "<group>"; };
-		100BD0621633FEF200676683 /* OpenNIPerson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenNIPerson.cpp; sourceTree = "<group>"; };
-		100BD0631633FEF200676683 /* OpenNIPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenNIPerson.h; sourceTree = "<group>"; };
-		100BD0641633FEF200676683 /* OpenNIRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenNIRecorder.cpp; sourceTree = "<group>"; };
-		100BD0651633FEF200676683 /* OpenNIRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenNIRecorder.h; sourceTree = "<group>"; };
-		100BD0661633FEF200676683 /* OpenNISkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenNISkeleton.cpp; sourceTree = "<group>"; };
-		100BD0671633FEF200676683 /* OpenNISkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenNISkeleton.h; sourceTree = "<group>"; };
-		100BD0681633FEF200676683 /* PlaybackApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlaybackApp.cpp; sourceTree = "<group>"; };
-		100BD0691633FEF200676683 /* PlaybackApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaybackApp.h; sourceTree = "<group>"; };
-		100BD06A1633FEF200676683 /* RecordingApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordingApp.cpp; sourceTree = "<group>"; };
-		100BD06B1633FEF200676683 /* RecordingApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingApp.h; sourceTree = "<group>"; };
-		100BD06C1633FEF200676683 /* ofxDepthGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDepthGenerator.cpp; sourceTree = "<group>"; };
-		100BD06D1633FEF200676683 /* ofxDepthGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDepthGenerator.h; sourceTree = "<group>"; };
 		100BD0741633FEF200676683 /* ofxImageGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxImageGenerator.cpp; sourceTree = "<group>"; };
 		100BD0751633FEF200676683 /* ofxImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxImageGenerator.h; sourceTree = "<group>"; };
 		100BD07A1633FEF200676683 /* ofxOpenNIContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOpenNIContext.cpp; sourceTree = "<group>"; };
@@ -411,6 +391,9 @@
 		100BD0A41633FF5200676683 /* libXnVHandGenerator_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libXnVHandGenerator_1_5_2.dylib; sourceTree = "<group>"; };
 		100BD0A51633FF5200676683 /* libXnVNite_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libXnVNite_1_5_2.dylib; sourceTree = "<group>"; };
 		100BD0C21634067C00676683 /* libGhost32.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGhost32.a; sourceTree = "<group>"; };
+		100BD0E616344BCA00676683 /* myDepthGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myDepthGenerator.h; sourceTree = "<group>"; };
+		100BD0E716344D4700676683 /* myDepthGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = myDepthGenerator.cpp; sourceTree = "<group>"; };
+		100BD0E916346D5900676683 /* myXtionOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = myXtionOperator.cpp; sourceTree = "<group>"; };
 		10b57be35f1ba1957c5790c24523b621 /* ofxSimpleGuiSliderBase.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxSimpleGuiSliderBase.h; path = ../../../addons/ofxSOSimpleGuiToo/src/Controls/ofxSimpleGuiSliderBase.h; sourceTree = SOURCE_ROOT; };
 		1435bd8cd3db79c624ec5377fa9e5291 /* GHOST_WindowX11.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = GHOST_WindowX11.h; path = ../../../addons/ofxFenster/libs/ghost/include/X11/GHOST_WindowX11.h; sourceTree = SOURCE_ROOT; };
 		15c04f4a9f2ed2044909bfb5c4784949 /* ofxSimpleGuiContent.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSimpleGuiContent.cpp; path = ../../../addons/ofxSOSimpleGuiToo/src/Controls/ofxSimpleGuiContent.cpp; sourceTree = SOURCE_ROOT; };
@@ -496,7 +479,7 @@
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		E4B69B5B0A3A1756003C02F2 /* TuboWariProjectionDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TuboWariProjectionDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -940,7 +923,9 @@
 		100BCFC81633F99D00676683 /* customs */ = {
 			isa = PBXGroup;
 			children = (
-				100BCFC91633F99D00676683 /* myDepthGenerator.h */,
+				100BD0E716344D4700676683 /* myDepthGenerator.cpp */,
+				100BD0E616344BCA00676683 /* myDepthGenerator.h */,
+				100BD0E916346D5900676683 /* myXtionOperator.cpp */,
 				100BCFCA1633F99D00676683 /* myXtionOperator.h */,
 				100BCFCB1633F99D00676683 /* ofxOpenNIHeaders.h */,
 			);
@@ -1168,9 +1153,6 @@
 		100BD05E1633FEF200676683 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				100BD05F1633FEF200676683 /* jvcOpenNIUtils */,
-				100BD06C1633FEF200676683 /* ofxDepthGenerator.cpp */,
-				100BD06D1633FEF200676683 /* ofxDepthGenerator.h */,
 				100BD0741633FEF200676683 /* ofxImageGenerator.cpp */,
 				100BD0751633FEF200676683 /* ofxImageGenerator.h */,
 				100BD07A1633FEF200676683 /* ofxOpenNIContext.cpp */,
@@ -1182,25 +1164,6 @@
 				100BD0841633FEF200676683 /* ofxUserGenerator.h */,
 			);
 			path = src;
-			sourceTree = "<group>";
-		};
-		100BD05F1633FEF200676683 /* jvcOpenNIUtils */ = {
-			isa = PBXGroup;
-			children = (
-				100BD0601633FEF200676683 /* OpenNIGrabber.cpp */,
-				100BD0611633FEF200676683 /* OpenNIGrabber.h */,
-				100BD0621633FEF200676683 /* OpenNIPerson.cpp */,
-				100BD0631633FEF200676683 /* OpenNIPerson.h */,
-				100BD0641633FEF200676683 /* OpenNIRecorder.cpp */,
-				100BD0651633FEF200676683 /* OpenNIRecorder.h */,
-				100BD0661633FEF200676683 /* OpenNISkeleton.cpp */,
-				100BD0671633FEF200676683 /* OpenNISkeleton.h */,
-				100BD0681633FEF200676683 /* PlaybackApp.cpp */,
-				100BD0691633FEF200676683 /* PlaybackApp.h */,
-				100BD06A1633FEF200676683 /* RecordingApp.cpp */,
-				100BD06B1633FEF200676683 /* RecordingApp.h */,
-			);
-			path = jvcOpenNIUtils;
 			sourceTree = "<group>";
 		};
 		100BD0961633FF5200676683 /* lib */ = {
@@ -1745,17 +1708,12 @@
 				100BCFC51633F82300676683 /* ofxCvHaarFinder.cpp in Sources */,
 				100BCFC61633F82300676683 /* ofxCvImage.cpp in Sources */,
 				100BCFC71633F82300676683 /* ofxCvShortImage.cpp in Sources */,
-				100BD0851633FEF200676683 /* OpenNIGrabber.cpp in Sources */,
-				100BD0861633FEF200676683 /* OpenNIPerson.cpp in Sources */,
-				100BD0871633FEF200676683 /* OpenNIRecorder.cpp in Sources */,
-				100BD0881633FEF200676683 /* OpenNISkeleton.cpp in Sources */,
-				100BD0891633FEF200676683 /* PlaybackApp.cpp in Sources */,
-				100BD08A1633FEF200676683 /* RecordingApp.cpp in Sources */,
-				100BD08B1633FEF200676683 /* ofxDepthGenerator.cpp in Sources */,
 				100BD08F1633FEF200676683 /* ofxImageGenerator.cpp in Sources */,
 				100BD0911633FEF200676683 /* ofxOpenNIContext.cpp in Sources */,
 				100BD0921633FEF200676683 /* ofxOpenNIRecorder.cpp in Sources */,
 				100BD0951633FEF200676683 /* ofxUserGenerator.cpp in Sources */,
+				100BD0E816344D4700676683 /* myDepthGenerator.cpp in Sources */,
+				100BD0EA16346D5900676683 /* myXtionOperator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1829,6 +1787,7 @@
 					../../../addons/ofxTextInputField/src,
 					../../../addons/ofxOpenCv/src,
 					../../../addons/ofxOpenCv/libs/opencv/include,
+					/src/customs,
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1836,7 +1795,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -1900,6 +1859,7 @@
 					../../../addons/ofxTextInputField/src,
 					../../../addons/ofxOpenCv/src,
 					../../../addons/ofxOpenCv/libs/opencv/include,
+					/src/customs,
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1907,7 +1867,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 			};
 			name = Release;
 		};
@@ -1952,7 +1912,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../../addons/ofxFenster/libs/ghost/lib/win_vs\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1997,7 +1957,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../../addons/ofxFenster/libs/ghost/lib/win_vs\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -10,7 +10,7 @@
 #define xtionExample_ofxOpenNIHeaders_h
 
 #include "ofxOpenNIContext.h"
-#include "ofxDepthGenerator.h"
+//#include "ofxDepthGenerator.h"
 #include "ofxOpenNIRecorder.h"
 
 #if defined (TARGET_OSX) //|| defined(TARGET_LINUX) // only working on Mac/Linux at the moment (but on Linux you need to run as sudo...)
