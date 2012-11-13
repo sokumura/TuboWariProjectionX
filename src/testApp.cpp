@@ -4,20 +4,28 @@
 //xtions
 myXtionOperator xtions;
 ofTexture tex[XTION_NUM];
+soDepthThresholds thresholds[XTION_NUM];
+ofTexture monoTexture[XTION_NUM];
+int a,b,c,d;
 //-xtions
 //////////////////
 //////////////////
 
 void uiWindow::setup(){
     printf("uiWindow setup()が呼ばれました。\n");
+    
     gui.setup("first page");
     for (int i = 0; i < XTION_NUM; i++) {
+        
         tex[i].allocate(640, 480, GL_RGBA);
         if(i > 0) gui.addTitle("Xtion No." + ofToString(i + 1)).setNewColumn(true);
         else gui.addTitle("Xtion No." + ofToString(i + 1));
         gui.addContent("depth_map", tex[i]);
+        gui.addRangeSlider("thresholds:near&far", thresholds[i].near, thresholds[i].far, thresholds[i].min, thresholds[i].max);
+        
     }
-    gui.setPage(1);
+    
+    gui.loadFromXML();
     
 }
 
@@ -26,9 +34,6 @@ void uiWindow::update(){
         printf("uiWindow update()が呼ばれました。\n");
         counter++;
     }
-    
-    
-    
 }
 
 void uiWindow::keyPressed(int key){
@@ -72,7 +77,9 @@ void testApp::setup(){
 //xtion--
     xtions.setup();
 //--xtion
-    
+    for (int i = 0; i < XTION_NUM; i++) {
+        monoTexture[i].allocate(640, 480, GL_LUMINANCE);
+    }
 }
 
 //--------------------------------------------------------------
@@ -84,16 +91,20 @@ void testApp::update(){
 	//xtion--
     xtions.update();
     for (int i = 0; i < XTION_NUM; i++) {
-        tex[i].loadData(xtions.getDepthGenerator(i).generateTexture(), 640, 480, GL_RGBA);
+        const unsigned char * p = xtions.getDepthGenerator(i).getMonitorTexture();
+        tex[i].loadData(p, 640, 480, GL_RGBA);
     }
     
     //--xtion
     
     //gui
+    
     //--gui
     
-    
-    
+    for (int i = 0; i < XTION_NUM; i++) {
+        const unsigned char * p = xtions.getDepthGenerator(i).getMonoTexture();
+        monoTexture[i].loadData(p, 640, 480, GL_LUMINANCE);
+    }
 }
 
 //--------------------------------------------------------------
@@ -101,9 +112,10 @@ void testApp::draw(){
     if (counter < COUNTER_MAX) {
         printf("testApp draw()が呼ばれました。\n");
     }
-    tex[0].draw(0.0f, 0.0f);
-    
-
+//    tex[0].draw(0.0f, 0.0f);
+//    for (int i = 0; i < XTION_NUM; i++) {
+//        monoTexture[i].draw(0.0f + i * 650, 500.0f);
+//    }
 }
 
 //--------------------------------------------------------------

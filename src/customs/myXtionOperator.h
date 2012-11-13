@@ -20,6 +20,8 @@
 
 #define XTION_NUM 2
 
+extern soDepthThresholds thresholds[XTION_NUM];
+
 class myXtionOperator {
 public:
     myXtionOperator();
@@ -32,6 +34,7 @@ public:
     
     myDepthGenerator& getDepthGenerator(int index);
     int counter;
+    
 
 private:
     myXtionOperator(const myXtionOperator& other);

@@ -75,7 +75,7 @@ void myXtionOperator::update(){
         counter++;
     }
     for (int i = 0; i < generatorNum; i++) {
-        depth_GRs[i].update();
+        depth_GRs[i].update(thresholds[i]);
     }
     
 }

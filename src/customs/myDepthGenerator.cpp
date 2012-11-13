@@ -17,12 +17,14 @@ myDepthGenerator::myDepthGenerator(){
     out_put_modes.nFPS  = 30;
     
     backCaptured_map = new unsigned short[out_put_modes.nXRes * out_put_modes.nYRes];
-    depth_map = new unsigned short[out_put_modes.nXRes * out_put_modes.nYRes];
     memset(backCaptured_map, 0, out_put_modes.nXRes * out_put_modes.nYRes * sizeof(unsigned short));
+    depth_map = new unsigned short[out_put_modes.nXRes * out_put_modes.nYRes];
     memset(depth_map, 0, out_put_modes.nXRes * out_put_modes.nYRes * sizeof(unsigned short));
+    mono_texture = new unsigned char[out_put_modes.nXRes * out_put_modes.nYRes];
+    memset(mono_texture, 0, out_put_modes.nXRes * out_put_modes.nYRes * sizeof(unsigned char));
 #ifdef HAVE_TEXTURE
-    depth_texture = new unsigned char[out_put_modes.nXRes * out_put_modes.nYRes * 4];
-    memset(depth_texture, 0, out_put_modes.nXRes * out_put_modes.nYRes * 4 * sizeof(unsigned char));
+    monitor_texture = new unsigned char[out_put_modes.nXRes * out_put_modes.nYRes * 4];
+    memset(monitor_texture, 0, out_put_modes.nXRes * out_put_modes.nYRes * 4 * sizeof(unsigned char));
 #endif
     
 }
@@ -31,13 +33,17 @@ myDepthGenerator::~myDepthGenerator(){
     printf("myDepthGenerator No.%u デストラクタが呼ばれました。\n", number);
     delete [] backCaptured_map;
     delete [] depth_map;
+    delete [] mono_texture;
 #ifdef HAVE_TEXTURE
-    delete [] depth_texture;
+    delete [] monitor_texture;
 #endif
 }
 //----------------------------------------------
 bool myDepthGenerator::setup(xn::NodeInfo const& node, int num){
     printf("myDepthGenerator No.%u setup()が呼ばれました。 counter : %u\n", number, counter);
+    depthMIN = 10000;
+    depthMAX = 0;
+    
     number = num;
     XnStatus result = XN_STATUS_OK;
 
@@ -47,14 +53,6 @@ bool myDepthGenerator::setup(xn::NodeInfo const& node, int num){
         return false;
     } else {
         depth_generator.SetMapOutputMode(out_put_modes);
-        
-        // setup mask pixelskk
-        thresholds.max = thresholds.far = depth_generator.GetDeviceMaxDepth();
-        
-        cout << "\n\n/////myDepthGenerator/setup()///////" <<
-        "\ndepth_generator.GetDeviceMaxDepth() : " << depth_generator.GetDeviceMaxDepth() <<
-        "\nthresholds.max : " << thresholds.max <<
-        "\nthresholds.far : " << thresholds.far << "\n\n" << endl;
         
         return true;
     }
@@ -68,7 +66,7 @@ void myDepthGenerator::startGenerating(){
 //----------------------------------------------
 
 //----------------------------------------------
-void myDepthGenerator::update(){
+void myDepthGenerator::update(soDepthThresholds thresholds){
     
     if (counter < COUNTER_MAX) {
         printf("myDepthGenerator No.%u update()が呼ばれました\n" , number);
@@ -78,94 +76,66 @@ void myDepthGenerator::update(){
         depth_generator.WaitAndUpdateData();
         depth_generator.GetMetaData(dmd);
         
-        counter2++;
-        if (counter2 == 50 || counter2 == 60) {
-            cout << "\n\n--------thresholds----------\n" <<
-            "this dpthGenerator's NO is " << number <<
-            "\nnear : " << thresholds.near <<
-            "\nfar : " << thresholds.far <<
-            "\nmin : " << thresholds.min <<
-            "\nmax : " << thresholds.max << endl;
-            
-            cout << "\n\n---------------dmd-------------------\n" <<
-            "dmd.DataSize() : " << dmd.DataSize() <<
-            "\ndmd.FPS() : " << dmd.FPS() <<
-            "\ndmd.FrameID() : " << dmd.FrameID() <<
-            "\ndmd.FullXRes() : " << dmd.FullXRes() <<
-            "\ndmd.FullYRes() : " << dmd.FullYRes() <<
-            "\ndmd.XRes() : " << dmd.XRes() <<
-            "\ndmd.YRes() : " << dmd.YRes() <<
-            "\ndmd.ZRes() : " << dmd.ZRes() <<
-            "\ndmd.XOffset() : " << dmd.XOffset() <<
-            "\ndmd.YOffset() : " << dmd.YOffset() << endl;
-        }
-//        const XnDepthPixel * depth = changeToRealDistance(dmd.Data());
-//        memcpy(depth_map, depth, out_put_modes.nXRes * out_put_modes.nYRes * sizeof(XnDepthPixel));//depth_mapの更新
-#ifdef HAVE_TEXTURE
+        
+        privThresholds = thresholds;
         generateTexture();
-#endif
+        generateMonoTexture();
+        
+        counter2++;
+        if (counter2 % 1000 == 0) {
+            console(true);
+        }
     }
-}
-
-//----------------------------------------------
-void myDepthGenerator::setThreshold(XnUInt16 const& _near, XnUInt16 const& _far){
-    thresholds.near = _near;
-    thresholds.far = _far;
 }
 
 //----------------------------------------------
 XnMapOutputMode& myDepthGenerator::getMapMode() {
     return out_put_modes;
 }
-//----------------------------------------------
-XnDepthPixel * myDepthGenerator::getDepthPixels(){//soDepthThresholds const& thre){
-    XnDepthPixel * depth = new XnDepthPixel[sizeof(XnDepthPixel) * out_put_modes.nXRes * out_put_modes.nYRes];
-//    for (int i = 0; i < out_put_modes.nXRes * out_put_modes.nYRes; i++) {
-//        if (depth_map[i] < thre.near || depth_map[i] > thre.far) {
-//            depth[i] = 0;
-//        } else depth[i] = depth_map[i];
-//    }
-    return depth;
-}
-//----------------------------------------------
-//inline
-//----------------------------------------------
-inline XnDepthPixel* myDepthGenerator::changeToRealDistance(const XnDepthPixel * dep_pixels) {
-    XnDepthPixel * p = new XnUInt16[sizeof(dep_pixels) / sizeof(dep_pixels[0])];
-    //XnDepthPixel newPixels[sizeof(dep_pixels) / sizeof(dep_pixels[0])];
-    for (int i = 0; i < sizeof(dep_pixels) / sizeof(dep_pixels[0]); i++) {
-        p[i] = (unsigned short)(0.1236 * tan(dep_pixels[i] / 2842.5 + 1.1863));
-    }
-    //p = newPixels;
-    return p;
-}
 
-inline XnUInt16 myDepthGenerator::changeToRealDistance(XnUInt16 const depthValue){
-    return (unsigned short)(0.1236 * tan(depthValue / 2842.5 + 1.1863));
-}
-
-#ifdef HAVE_TEXTURE
-//----------------------------------------------
-unsigned char * myDepthGenerator::mapDepthToChar(XnDepthPixel * const depthMap){
-    unsigned char * pixels = new unsigned char[out_put_modes.nXRes * out_put_modes.nYRes];
-    //TODO: どの領域に移すか
-    for (int i = 0; i < out_put_modes.nXRes * out_put_modes.nYRes; i++) {
-        pixels[i] = ofMap((float)depthMap[i], (float)thresholds.min, (float)thresholds.max, 0.0, 255.0);
-    }
-    return pixels;
-}
-unsigned char * myDepthGenerator::generateTexture() {
+void myDepthGenerator::generateMonoTexture() {
     const XnDepthPixel * depth = dmd.Data();
     //XN_ASSERT(depth);
     if (dmd.FrameID() == 0) return;
     
     float max = 255;
-	for (XnUInt16 y = dmd.YOffset(); y < dmd.YRes() + dmd.YOffset(); y++) {//上のオフセット位置から一番下まで
-		unsigned char * texture = (unsigned char*)depth_texture + y * dmd.XRes() * 4 + dmd.XOffset() * 4;
+    for (XnUInt16 y = 0; y < dmd.YRes(); y++) {
+        unsigned char * texture = mono_texture + y * dmd.XRes();
+		for (XnUInt16 x = 0; x < dmd.XRes(); x++, depth++, texture++) {
+            
+            if (*depth > privThresholds.near && *depth < privThresholds.far)
+                *texture = 255;
+            else
+                *texture = 0;
+        }
+    }
+    
+}
+
+const unsigned char * myDepthGenerator::getMonoTexture() const{
+    return mono_texture;
+}
+
+
+
+#ifdef HAVE_TEXTURE
+//----------------------------------------------
+
+void myDepthGenerator::generateTexture() {
+    const XnDepthPixel * depth = dmd.Data();
+    //XN_ASSERT(depth);
+    if (dmd.FrameID() == 0) return;
+    
+    float max = 255;
+    for (XnUInt16 y = 0; y < dmd.YRes(); y++) {
+        unsigned char * texture = monitor_texture + y * dmd.XRes() * 4;
 		for (XnUInt16 x = 0; x < dmd.XRes(); x++, depth++, texture += 4) {
             
-            XnUInt8 a = (XnUInt8)(((*depth) / ( thresholds.max / max)));
-            texture[0] = a;
+            XnUInt8 a = (XnUInt8)(((*depth) / (1 - privThresholds.max / max)));
+            if (*depth > privThresholds.near && *depth < privThresholds.far) {
+                texture[0] = 255;
+            } else texture[0] = a;
+            
             texture[1] = a;
             texture[2] = a;
             
@@ -174,13 +144,33 @@ unsigned char * myDepthGenerator::generateTexture() {
             else
                 texture[3] = 255;
             
+            if (*depth < depthMIN && *depth != 0) depthMIN = *depth;
+            if (*depth > depthMAX) depthMAX = *depth;
         }
     }
-    return depth_texture;
+}
+
+const unsigned char * myDepthGenerator::getMonitorTexture() const{
+    return monitor_texture;
 }
 
 #endif
 
+void myDepthGenerator::console(bool bOut){
+    printf("\n--No.%u--privThresholds\nnear:%u\nfar:%u\nmin:%u\nmax:%u\n\n", number, privThresholds.near, privThresholds.far, privThresholds.min, privThresholds.max);
+    
+    cout << "\n\n---------------dmd-------------------\n" <<
+    "dmd.DataSize() : " << dmd.DataSize() <<
+    "\ndmd.FPS() : " << dmd.FPS() <<
+    "\ndmd.FrameID() : " << dmd.FrameID() <<
+    "\ndmd.FullXRes() : " << dmd.FullXRes() <<
+    "\ndmd.FullYRes() : " << dmd.FullYRes() <<
+    "\ndmd.XRes() : " << dmd.XRes() <<
+    "\ndmd.YRes() : " << dmd.YRes() <<
+    "\ndmd.ZRes() : " << dmd.ZRes() <<
+    "\ndmd.XOffset() : " << dmd.XOffset() <<
+    "\ndmd.YOffset() : " << dmd.YOffset() << endl;
+}
 
 
 

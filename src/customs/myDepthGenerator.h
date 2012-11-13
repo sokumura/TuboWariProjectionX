@@ -16,14 +16,15 @@
 #include "XnCppWrapper.h"
 #include "ofMain.h"
 
+
 #define HAVE_TEXTURE
 #define COUNTER_MAX 0
 
 struct soDepthThresholds {
-    XnUInt16 near = 0;
-    XnUInt16 far = 10000;
-    XnUInt16 min = 0;
-    XnUInt16 max = 10000;
+    int near = 3000;
+    int far = 5000;
+    int min = 0;
+    int max = 8000;
 };
 
 class myDepthGenerator {
@@ -33,39 +34,49 @@ public:
     ~myDepthGenerator();
 	bool setup(xn::NodeInfo const& node, int num);
     void startGenerating();
-    void update();
+    void update(soDepthThresholds thresholds);
     
     //options
-    XnDepthPixel * getDepthPixels();//soDepthThresholds const& thre);
-    int getNumber() const { return number;};
-    void setThreshold(XnUInt16 const& _near, XnUInt16 const& _far);
+    int               getNumber() const { return number;};
     
-    bool bUpdateMasks;
-    XnMapOutputMode& getMapMode();
-    //inlines
-    inline XnDepthPixel* changeToRealDistance(const XnDepthPixel * dep_pixels);
-    inline XnUInt16 changeToRealDistance(XnUInt16 const depthValue);
+    bool              bUpdateMasks;
+    XnMapOutputMode&  getMapMode();
+    
+    void  generateMonoTexture();
+    const unsigned char * getMonoTexture() const;
+    
+    ofVboMesh vboMesh;
+    ofVbo vbo;
+
 #ifdef HAVE_TEXTURE
-    unsigned char * generateTexture();
+    void  generateTexture();
+    const unsigned char * getMonitorTexture() const;
 #endif
     
 private:
     myDepthGenerator(const myDepthGenerator& other);
 	myDepthGenerator& operator = (const myDepthGenerator&);
     
+    void console(bool bOut);
+    
     xn::DepthGenerator      depth_generator;
     xn::DepthMetaData       dmd;
     XnMapOutputMode         out_put_modes;
-    soDepthThresholds       thresholds;
     XnDepthPixel *          backCaptured_map;
     XnDepthPixel *          depth_map;
+    
+    XnDepthPixel depthMIN, depthMAX;
     
     int number;
     int counter, counter2;
     
+    unsigned char * mono_texture;
+    
+    soDepthThresholds privThresholds;
+    
 #ifdef HAVE_TEXTURE
-    unsigned char * depth_texture;
-    unsigned char * mapDepthToChar(XnDepthPixel * const depthMap);
+    unsigned char * monitor_texture;
+    
 #endif
 	
 };
