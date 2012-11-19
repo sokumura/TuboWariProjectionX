@@ -6,7 +6,14 @@ myXtionOperator xtions;
 ofTexture tex[XTION_NUM];
 soDepthThresholds thresholds[XTION_NUM];
 ofTexture monoTexture[XTION_NUM];
+int bgCapturedCountGlobal[XTION_NUM];
+int bgCapturePlay[XTION_NUM];
+bool trCaptureBg[XTION_NUM];
+bool trFreeBg[XTION_NUM];
+bool bUseBgDepth[XTION_NUM];
+
 int a,b,c,d;
+
 //-xtions
 //////////////////
 //////////////////
@@ -16,13 +23,21 @@ void uiWindow::setup(){
     
     gui.setup("first page");
     for (int i = 0; i < XTION_NUM; i++) {
+        bgCapturedCountGlobal[i] = 0;
+        trCaptureBg[i] = false;
+        trFreeBg[i] = false;
+        bUseBgDepth[i] = false;
         
         tex[i].allocate(640, 480, GL_RGBA);
         if(i > 0) gui.addTitle("Xtion No." + ofToString(i + 1)).setNewColumn(true);
         else gui.addTitle("Xtion No." + ofToString(i + 1));
         gui.addContent("depth_map", tex[i]);
         gui.addRangeSlider("thresholds:near&far", thresholds[i].near, thresholds[i].far, thresholds[i].min, thresholds[i].max);
-        
+        gui.addValueMonitor("bgCapturedCount", bgCapturedCountGlobal[i]);
+        gui.addButton("bgCapture()", trCaptureBg[i]);
+        gui.addButton("bgFree()", trFreeBg[i]);
+        gui.addToggle("useBgDepth", bUseBgDepth[i]);
+        gui.addSlider("capturePlay", bgCapturePlay[i], 0, 200);
     }
     
     gui.loadFromXML();
@@ -30,10 +45,20 @@ void uiWindow::setup(){
 }
 
 void uiWindow::update(){
-    if (counter < COUNTER_MAX) {
-        printf("uiWindow update()が呼ばれました。\n");
-        counter++;
+    for (int i = 0; i < XTION_NUM; i++) {
+        bgCapturedCountGlobal[i] = xtions.getDepthGenerator(i).getCaptureCount();
+        xtions.getDepthGenerator(i).bBgDepth = bUseBgDepth[i];
+        xtions.getDepthGenerator(i).capturePlay = bgCapturePlay[i];
+        if (trCaptureBg[i]) {
+            xtions.getDepthGenerator(i).runCapture();
+            trCaptureBg[i] = false;
+        }
+        if (trFreeBg[i]) {
+            xtions.getDepthGenerator(i).freeBgDepth();
+            trFreeBg[i] = false;
+        }
     }
+    
 }
 
 void uiWindow::keyPressed(int key){
@@ -112,10 +137,10 @@ void testApp::draw(){
     if (counter < COUNTER_MAX) {
         printf("testApp draw()が呼ばれました。\n");
     }
-//    tex[0].draw(0.0f, 0.0f);
-//    for (int i = 0; i < XTION_NUM; i++) {
-//        monoTexture[i].draw(0.0f + i * 650, 500.0f);
-//    }
+    tex[0].draw(0.0f, 0.0f);
+    for (int i = 0; i < XTION_NUM; i++) {
+        monoTexture[i].draw(0.0f + i * 650, 500.0f);
+    }
 }
 
 //--------------------------------------------------------------

@@ -19,6 +19,7 @@
 
 #define HAVE_TEXTURE
 #define COUNTER_MAX 0
+#define CAPTURE_TIMES 30
 
 struct soDepthThresholds {
     int near = 3000;
@@ -45,8 +46,13 @@ public:
     void  generateMonoTexture();
     const unsigned char * getMonoTexture() const;
     
-    ofVboMesh vboMesh;
-    ofVbo vbo;
+    void captureBgDepth();
+    void freeBgDepth();
+    bool bBgDepth;
+    int capturePlay;
+    unsigned int getCaptureCount() const;
+    void setCapturedCount();
+    void runCapture();
 
 #ifdef HAVE_TEXTURE
     void  generateTexture();
@@ -62,21 +68,23 @@ private:
     xn::DepthGenerator      depth_generator;
     xn::DepthMetaData       dmd;
     XnMapOutputMode         out_put_modes;
-    XnDepthPixel *          backCaptured_map;
-    XnDepthPixel *          depth_map;
+    XnDepthPixel bgDepth[640 * 480];
+    //XnDepthPixel *          depth_map;
     
     XnDepthPixel depthMIN, depthMAX;
     
     int number;
-    int counter, counter2;
+    int counter, counter2, counter3;
     
-    unsigned char * mono_texture;
+    unsigned int bgCaptureCount, totalPixel, captureTimes;
+    bool bRunningCapture;
+    
+    unsigned char mono_texture[640*480];
     
     soDepthThresholds privThresholds;
     
 #ifdef HAVE_TEXTURE
-    unsigned char * monitor_texture;
-    
+    unsigned char monitor_texture[640*480*4];
 #endif
 	
 };
