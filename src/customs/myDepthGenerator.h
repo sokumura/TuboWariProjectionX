@@ -16,10 +16,7 @@
 #include "XnCppWrapper.h"
 #include "ofMain.h"
 
-
-#define HAVE_TEXTURE
-#define COUNTER_MAX 0
-#define CAPTURE_TIMES 30
+#define TOTAL_PIXEL 640*480
 
 struct soDepthThresholds {
     int near = 3000;
@@ -38,7 +35,7 @@ public:
     void update(soDepthThresholds thresholds);
     
     //options
-    int               getNumber() const { return number;};
+    int               getNumber() const { return xtionNum;};
     
     bool              bUpdateMasks;
     XnMapOutputMode&  getMapMode();
@@ -54,10 +51,8 @@ public:
     void setCapturedCount();
     void runCapture();
 
-#ifdef HAVE_TEXTURE
     void  generateTexture();
     const unsigned char * getMonitorTexture() const;
-#endif
     
 private:
     myDepthGenerator(const myDepthGenerator& other);
@@ -68,24 +63,16 @@ private:
     xn::DepthGenerator      depth_generator;
     xn::DepthMetaData       dmd;
     XnMapOutputMode         out_put_modes;
-    XnDepthPixel bgDepth[640 * 480];
-    //XnDepthPixel *          depth_map;
+    
+    XnDepthPixel bgDepth[TOTAL_PIXEL];
+    unsigned char mono_texture[TOTAL_PIXEL];
+    unsigned char monitor_texture[TOTAL_PIXEL *4];
     
     XnDepthPixel depthMIN, depthMAX;
+    soDepthThresholds privThresholds;//このxtionのthresholds
+    int xtionNum;//このxtionの番号
     
-    int number;
-    int counter, counter2, counter3;
-    
-    unsigned int bgCaptureCount, totalPixel, captureTimes;
-    bool bRunningCapture;
-    
-    unsigned char mono_texture[640*480];
-    
-    soDepthThresholds privThresholds;
-    
-#ifdef HAVE_TEXTURE
-    unsigned char monitor_texture[640*480*4];
-#endif
+    unsigned int bgCaptureCount, totalPixel;
 	
 };
 

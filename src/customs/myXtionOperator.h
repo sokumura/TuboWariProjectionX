@@ -20,7 +20,8 @@
 
 #define XTION_NUM 2
 
-extern soDepthThresholds thresholds[XTION_NUM];
+extern int thresholdNear[XTION_NUM];
+extern int thresholdFar[XTION_NUM];
 
 class myXtionOperator {
 public:
@@ -35,6 +36,7 @@ public:
     myDepthGenerator& getDepthGenerator(int index);
     int counter;
     
+    ofVboMesh vboMesh;
 
 private:
     myXtionOperator(const myXtionOperator& other);
@@ -42,11 +44,13 @@ private:
     
     ofxOpenNIContext context;
     myDepthGenerator depth_GRs[XTION_NUM];
+    soDepthThresholds thresholds[XTION_NUM];
     int generatorNum;
     
     xn::EnumerationErrors errors;
     void logErrors(xn::EnumerationErrors& rErrors);
 
+    
 };
 
 #endif

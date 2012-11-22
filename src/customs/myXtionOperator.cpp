@@ -9,18 +9,14 @@
 #include "myXtionOperator.h"
 
 myXtionOperator::myXtionOperator(){
-    printf("myXtionOperator コンストラクタが呼ばれました. \n");
-    counter = 0;
+
+
 }
 myXtionOperator::~myXtionOperator(){
-    printf("myXtionOperator デストラクタが呼ばれました。\n");
+
 }
 
 void myXtionOperator::setup(){
-    if (counter < COUNTER_MAX) {
-        printf("myXtionOperator setup()が呼ばれました\n");
-        counter++;
-    }
     cout << "OpenNI ココカラ☆" << endl;
     context.setup();
     
@@ -66,25 +62,22 @@ void myXtionOperator::setup(){
     generatorNum = geneNum;
     printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!\n%i 個のジェネレーターを作りました\n!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", generatorNum);
     
+    //mesh
+    vboMesh.setMode(OF_PRIMITIVE_POINTS);
     
 }
 //--------------------------------------
 void myXtionOperator::update(){
-    if (counter < COUNTER_MAX) {
-        printf("myXtionOperator update()が呼ばれました\n");
-        counter++;
-    }
     for (int i = 0; i < generatorNum; i++) {
+        thresholds[i].near = thresholdNear[i];
+        thresholds[i].far = thresholdFar[i];
         depth_GRs[i].update(thresholds[i]);
     }
     
 }
 //--------------------------------------
 void myXtionOperator::testDraw(float x, float y, float w, float h){
-    printf("myXtionOperator testDraw()が呼ばれました\n");
-#ifdef HAVE_TEXTURE
-
-#endif
+    
 }
 //--------------------------------------
 void myXtionOperator::customEnumerateProductionTrees(xn::Context& con, XnProductionNodeType type){

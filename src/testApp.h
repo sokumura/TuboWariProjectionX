@@ -6,6 +6,7 @@
 #include "myXtionOperator.h"
 #include "ofxSimpleGuiToo.h"
 
+#define OFXMSAGUI_DONT_USE_XML
 
 class uiWindow : public ofxFensterListener {
 public:
@@ -18,6 +19,12 @@ public:
     void keyPressed(int key);
     
     int counter;
+    
+    void mySaveToXml();
+    void myLoadFromXml();
+
+    ofxXmlSettings xml;
+    
 };
 
 class testApp : public ofBaseApp{
@@ -37,11 +44,10 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    //xtion
     
-
     //fenster
     uiWindow ui;
-    
     int counter;
 		
 };

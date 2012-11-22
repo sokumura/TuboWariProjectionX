@@ -8,8 +8,6 @@
 #include "myDepthGenerator.h"
 
 myDepthGenerator::myDepthGenerator(){
-    counter = counter2 = counter3 = 0;
-    printf("myDepthGenerator No.%u コンストラクタが呼ばれました。 counter : %u\n", number, counter);
     bUpdateMasks = false;
     // make new map mode -> default to 640 x 480 @ 30fps
     out_put_modes.nXRes = XN_VGA_X_RES;
@@ -18,10 +16,10 @@ myDepthGenerator::myDepthGenerator(){
     
     totalPixel = out_put_modes.nXRes * out_put_modes.nYRes;
     
-    bBgDepth = bRunningCapture = false;
-    bgCaptureCount = captureTimes = 0;
+    bBgDepth = false;
+    bgCaptureCount = 0;
     freeBgDepth();
-    capturePlay = 0;
+    capturePlay = 0;//testAppで初期設定せよ
 }
 
 myDepthGenerator::~myDepthGenerator(){
@@ -30,10 +28,9 @@ myDepthGenerator::~myDepthGenerator(){
 }
 //----------------------------------------------
 bool myDepthGenerator::setup(xn::NodeInfo const& node, int num){
-    printf("myDepthGenerator No.%u setup()が呼ばれました。 counter : %u\n", number, counter);
     depthMIN = 10000;
     depthMAX = 0;
-    number = num;
+    xtionNum = num;
     XnStatus result = XN_STATUS_OK;
     result = node.GetInstance(depth_generator);
     if (result != XN_STATUS_OK) {
@@ -49,17 +46,13 @@ bool myDepthGenerator::setup(xn::NodeInfo const& node, int num){
 //----------------------------------------------
 void myDepthGenerator::startGenerating(){
     XnStatus status = depth_generator.StartGenerating();
-    if (status == XN_STATUS_OK) printf("DepthGenerator %i Generating Start!\n", number);
+    if (status == XN_STATUS_OK) printf("DepthGenerator %i Generating Start!\n", xtionNum);
     else ofLogError("myDepthGenerator/startGenerating ",xnGetStatusString(status));
 }
 
 //----------------------------------------------
 void myDepthGenerator::update(soDepthThresholds thresholds){
     
-    if (counter < COUNTER_MAX) {
-        printf("myDepthGenerator No.%u update()が呼ばれました\n" , number);
-        counter++;
-    }
     if (depth_generator.IsNewDataAvailable()) {
         depth_generator.WaitAndUpdateData();
         depth_generator.GetMetaData(dmd);
@@ -68,16 +61,6 @@ void myDepthGenerator::update(soDepthThresholds thresholds){
         
         generateTexture();
         generateMonoTexture();
-        
-        if (bRunningCapture) {
-            if (captureTimes > CAPTURE_TIMES) {
-                captureTimes = 0;
-                bRunningCapture = false;
-            } else {
-                captureBgDepth();
-                captureTimes++;
-            }
-        }
         
     }
     
@@ -89,29 +72,84 @@ XnMapOutputMode& myDepthGenerator::getMapMode() {
 }
 //--------------------
 void myDepthGenerator::runCapture(){
-    bRunningCapture = true;
+    captureBgDepth();
     bgCaptureCount++;
 }
 
 //----------------------------------------------
 void myDepthGenerator::captureBgDepth(){
     const XnDepthPixel * bg = dmd.Data();
+    unsigned int X = out_put_modes.nXRes;
+    unsigned int Y = out_put_modes.nYRes;
+    unsigned short addition = bgCaptureCount;
+    int counter6[9] = {0,0,0,
+                        0,0,0,
+                        0,0,0};
     XN_ASSERT(bg);
-    if (bgCaptureCount != 0) {
-        for (int i = 0; i < totalPixel; i++) {
-            if (bg[i] != 0 && bgDepth[i] > bg[i]) {
-                    bgDepth[i] = bg[i];
+    for (int i = 0; i < totalPixel; i++) {
+            if (i == 0) {//左上角
+                bgDepth[i] =
+                (bg[i] + bg[i+1] +
+                 bg[i + X] + bg[i + X +1]) / 4
+                - addition;
+                counter6[0]++;
+            } else if (i == X - 1) {//右上角
+                bgDepth[i] =
+                (bg[i] + bg[i-1] +
+                 bg[i + X] + bg[i + X -1]) / 4
+                - addition;
+                counter6[1]++;
+            } else if (i == X * Y - X) {//左下角
+                bgDepth[i] =
+                (bg[i] + bg[i+1] +
+                 bg[i - X] + bg[i - X +1]) / 4
+                - addition;
+                counter6[2]++;
+            } else if (i == X * Y - 1) {//右下角
+                bgDepth[i] =
+                (bg[i] + bg[i - 1] +
+                 bg[i - X] + bg[i - X -1]) / 4
+                - addition;
+                counter6[3]++;
+            }else if (i % X == 0 && i >= X && i < X * Y - X) {// 左端
+                bgDepth[i] =
+                (bg[i] + bg[i+1] +
+                 bg[i - X] + bg[i - X +1] +
+                 bg[i + X] + bg[i + X +1]) / 6
+                - addition;
+                counter6[4]++;
+            } else if (i % X == X - 1 && i >= X && i < X * Y - X) {//右端
+                bgDepth[i] = 
+                (bg[i] + bg[i - 1] +
+                 bg[i - X] + bg[i - X -1] +
+                 bg[i + X] + bg[i + X -1]) / 6
+                - addition;
+                counter6[5]++;
+            } else if (i < X) {//上端
+                bgDepth[i] =
+                (bg[i] + bg[i+1] + bg[i-1] +
+                 bg[i + X] + bg[i + X - 1] + bg[i + X +1]) / 6
+                - addition;
+                counter6[6]++;
+            } else if (i >= X * Y - X) {//下端
+                bgDepth[i] =
+                (bg[i] + bg[i+1] + bg[i-1] +
+                 bg[i - X] + bg[i - X - 1] + bg[i - X +1] )/ 6
+                - addition;
+                 counter6[7]++;
+            } else {//その他
+                bgDepth[i] =
+                (bg[i] + bg[i+1] + bg[i-1] +
+                bg[i - X] + bg[i - X - 1] + bg[i - X +1] +
+                 bg[i + X] + bg[i + X - 1] + bg[i + X +1]) / 9
+                - addition;
+                counter6[8]++;
             }
-        }
-    } else {
-        for (int i = 0; i < totalPixel; i++){
-            bgDepth[i] = bg[i];
-        }
     }
 }
 //--------------
 void myDepthGenerator::freeBgDepth(){
-    for (int i = 0; i < out_put_modes.nXRes * out_put_modes.nYRes; i++) {
+    for (int i = 0; i < totalPixel; i++) {
         bgDepth[i] = privThresholds.max;
     }
     bgCaptureCount = 0;
@@ -148,8 +186,6 @@ void myDepthGenerator::generateMonoTexture() {
 const unsigned char * myDepthGenerator::getMonoTexture() const{
     return mono_texture;
 }
-
-#ifdef HAVE_TEXTURE
 
 //---------------
 void myDepthGenerator::generateTexture() {
@@ -192,10 +228,8 @@ const unsigned char * myDepthGenerator::getMonitorTexture() const{
     return monitor_texture;
 }
 
-#endif
-
 void myDepthGenerator::console(bool bOut){
-    printf("\n--No.%u--privThresholds\nnear:%u\nfar:%u\nmin:%u\nmax:%u\n\n", number, privThresholds.near, privThresholds.far, privThresholds.min, privThresholds.max);
+    printf("\n--No.%u--privThresholds\nnear:%u\nfar:%u\nmin:%u\nmax:%u\n\n", xtionNum, privThresholds.near, privThresholds.far, privThresholds.min, privThresholds.max);
     
     cout << "\n\n---------------dmd-------------------\n" <<
     "dmd.DataSize() : " << dmd.DataSize() <<
